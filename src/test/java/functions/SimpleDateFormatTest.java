@@ -1,5 +1,7 @@
 package functions;
 
+import org.junit.Test;
+
 import java.text.SimpleDateFormat;
 
 /**
@@ -10,7 +12,8 @@ import java.text.SimpleDateFormat;
 public class SimpleDateFormatTest {
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public static void main(String[] args) {
+    @Test
+    public void wrong() {
 
 
         for (int i = 0; i < 20; ++i) {
@@ -18,6 +21,22 @@ public class SimpleDateFormatTest {
                 try {
 
                     System.out.println(Thread.currentThread().getName() + "--" + SIMPLE_DATE_FORMAT.parse("2020-06-01 11:35:00"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }, "Thread-" + i);
+            thread.start();
+        }
+    }
+
+    @Test
+    public void right() {
+        for (int i = 0; i < 20; ++i) {
+            Thread thread = new Thread(() -> {
+                try {
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    System.out.println(Thread.currentThread().getName() + "--" + simpleDateFormat.parse("2020-06-01 11:35:00"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
